@@ -21,6 +21,7 @@ public class BooleanAndIntConverter extends BaseTypeHandler<Boolean>{
             preparedStatement.setInt(i,1);
         }else{
             preparedStatement.setInt(i,0);
+            System.out.println("111");
         }
     }
 
