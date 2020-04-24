@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+<configuration>
+<properties resource="com/entity/db.properties"/>
+    <!--<settings>
+        &lt;!&ndash; 控制台打印sql语句 &ndash;&gt;
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>-->
+    <typeHandlers>
+        <typeHandler handler="com.entity.BooleanAndIntConverter"
+                     javaType="Boolean" jdbcType="INTEGER" />
+    </typeHandlers>
+
+    <environments default="mysql_developer">
+
+        <environment id="mysql_developer">
+
+            <transactionManager type="jdbc"/>
+
+            <dataSource type="pooled">
+
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+
+            </dataSource>
+
+        </environment>
+
+    </environments>
+
+    <mappers>
+        <!--
+        <mapper resource="cn/itcast/javaee/mybatis/many2many/CourseMapper.xml"/>
+        <mapper resource="cn/itcast/javaee/mybatis/many2many/StudentMapper.xml"/>
+        <mapper resource="cn/itcast/javaee/mybatis/one2one/StudentMapper.xml"/>
+        <mapper resource="cn/itcast/javaee/mybatis/one2one/CardMapper.xml"/>
+         -->
+        <mapper resource="com/entity/personMapper.xml"/>
+        <mapper resource="com/entity/studentMapper.xml"/>
+    </mappers>
+
+
+</configuration>

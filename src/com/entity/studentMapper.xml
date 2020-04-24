@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.entity.studentMapper">
+
+    <resultMap type="com.entity.Student" id="studentResult">
+        <id property="stuno" column="stuno"/>
+        <result property="stuname" column="stuname"/>
+        <result property="stuage" column="stuage"/>
+        <result property="graname" column="graname"/>
+        <result property="stusex" column="stusex" javaType="Boolean" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+
+    <select id="queryStudentByStuno" resultType="com.entity.Student" parameterType="int" >
+        select * from student where stuno=#{stuno}
+    </select>
+    <!---->
+ <!--   <update id="updateStudent" parameterMap="com.entity.Student">
+        update student SET  stuname=#{stuname},stuage=#{stuage},graname=#{graname} WHERE stuno=#{sutno}
+    </update>
+    <delete id="deleteStudentByStuno" parameterType="com.entity.Student">
+        delete from student where stuno = #{}
+    </delete>-->
+    <select id="queryAllStudent" resultMap="studentResult" >
+        select * from student
+    </select>
+    <insert id="addStudent" parameterType="com.entity.Student">
+        INSERT INTO  student(stuno,stuname,stuage,graname) VALUES (#{stuno},#{stuname},#{stuage},#{graname})
+    </insert>
+    <delete id="deleteStudent">
+        delete from student where stuno=#{stuno}
+    </delete>
+    <update id="updateStudent" parameterType="com.entity.Student">
+      update student set stuname=#{stuname},stuage=#{stuage},graname=#{graname} where stuno=#{stuno}
+    </update>
+    <insert id="addStudentwithConvert" parameterType="com.entity.Student">
+        INSERT INTO  student(stuno,stuname,stuage,graname,stusex) VALUES (#{stuno},#{stuname},#{stuage},#{graname},#{stusex,javaType=Boolean,jdbcType=INTEGER})
+    </insert>
+
+    <select id="querystudentByColumn" parameterType="string" resultMap="studentResult">
+          select * from student order by ${value} desc
+    </select>
+
+    <select id="queryByNameorAge" parameterType="com.entity.Student" resultType="com.entity.Student">
+        select * from student WHERE stuage=#{stuage} or stuname like #{stuname}
+    </select>
+
+    <select id="queryByAddress" parameterType="com.entity.Student" resultType="com.entity.Student">
+        select * from student WHERE homeAddress=#{address.homeAddress} or schoolAddress like #{address.schoolAddress}
+    </select>
+
+    <select id="queryByNameorAgeHashMap" parameterType="hashmap" resultType="com.entity.Student">
+    select * from student WHERE stuage=#{stuage} or stuname like #{stuname}
+    </select>
+    <select id="queryByStuNo" parameterType="com.entity.Grade" resultType="com.entity.Student">
+        select * from student
+        <where>
+          <if test="stuNos!=null and stuNos.size>0">
+            <foreach item="stuNo" collection="stuNos" open="and stuno in (" close=")" separator=",">
+               ${stuNo}
+            </foreach>
+        </if>
+    </where>
+    </select>
+
+    <select id="queryByStuAndCard" parameterType="int" resultType="com.entity.StudentBusiness">
+            SELECT * FROM student st INNER JOIN studentcard sc ON st.carid=sc.cardid where st.stuno = #{stuno}
+    </select>
+
+    <select id="queryByStuAndCardoo" parameterType="int" resultMap="studentcard">
+  SELECT * FROM student st INNER JOIN studentcard sc ON st.carid=sc.cardid where st.stuno = #{stuno}
+    </select>
+    <resultMap id="studentcard" type="com.entity.Student">
+        <id property="stuno" column="stuno"/>
+        <result property="stuname" column="stuname"/>
+        <result property="stuage" column="stuage"/>
+        <result property="graname" column="graname"/>
+        <result property="stusex" column="stusex" javaType="Boolean" jdbcType="INTEGER"/>
+        <association property="card" javaType="com.entity.Card">
+                <id property="cardid" column="cardid"></id>
+                <result property="cardinfo" column="cardinfo"></result>
+        </association>
+        </resultMap>
+</mapper>
