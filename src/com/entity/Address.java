@@ -6,6 +6,7 @@ package com.entity;
 public class Address {
     private String homeAddress;
     private String schoolAddress;
+    private String testtoday;
     public Address() {
     }
 
