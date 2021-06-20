@@ -5,12 +5,12 @@ package com.entity;
  */
 public class Address {
     private String homeAddress;
-    private String schoolAddress;
+    private String schoolAddress1;
     private String testtoday;
     public Address() {
     }
 
-    public Address(String homeAddress, String schoolAddress) {
+    public Address(String homeAddress, String schoolAddress1) {
         this.homeAddress = homeAddress;
         this.schoolAddress = schoolAddress;
     }
